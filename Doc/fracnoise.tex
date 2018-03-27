@@ -34,6 +34,8 @@ The fractal level controls the number of recursive call of the PerlinNoise on it
 The output value is multiplied by the fractal coefficient at each fractal level, and the input value is divided by the fractal coefficient at each level. the output value is rescaled to ensure it stays inside [0.0,1.0]. So for example, for a PerlinNoise with a fractal level of 2, a fractal coefficient of 0.1, an input value of 0.5, the output value will be equal to (PerlinNoise(0.5)*0.9+0.1*PerlinNoise(5.0))*0.9+0.01*PerlinNoise(50.0)
 \item smooth: a float value greater than 0.0.\\
 The smooth is applied after fractal and before scaling.Output values are raise to the power of smooth component by component. This can be used to control the general aspect of the distribution of the output values (more bumpy for value below 1.0, more thorny for value above).
+\item square: a float value greater in [0.0, 1.0].\\
+The squareness of the pod controls the smoothing of the input value of the PerlinNoise. If it equals 0.0 the result is the standard PerlinNoise. If it equals 1.0 the result is the PerlinNoise without smoothing of the input. Explicitly: $smooth(t,square)=(1-square)smooth(t)+square*t$. The squareness is applied when calculating the PerlinNoise for a pod with this pod's squareness.\\
 \item bound: a Shapoid.\\
 The PerlinNoise is defined over $\mathbb{R}$, however one can want to restrain it to some subdomain. This can be done by attaching a Shapoid with proper position and axis of dimension equal to the input dimension. Then, the PerlinNoise will output 0.0 for input (original one, not the scaleIn-ed one) outside of the subdomain defined by the outside of the Shapoid, and its normal value for the subdomain defined by the inside of the Shapoid.
 \item border: a float value between 0.0 and 1.0 representing the border of the boundary.\\
@@ -58,7 +60,7 @@ FracNoise(\overrightarrow{p})=\\
         PN\left(
           Rot_{\overrightarrow{e}}\left(
             \overrightarrow{p}\odot\overrightarrow{si},\frac{2\pi(i+1)}{n+1}          
-          \right).\frac{1.0}{c^f}
+          \right).\frac{1.0}{c^f},q
         \right)^s
       \right]_{i\in[0,n-1]}
       \odot \overrightarrow{so}+\overrightarrow{t}
@@ -82,6 +84,8 @@ where\\
 \item $\overrightarrow{so}$ is the scaleOut.
 \item $\overrightarrow{t}$ is the shiftOut.
 \item $n$ is the number of dimensions of output.
+\item $s$ is the smoothness of the pod.
+\item $q$ is the squareness of the pod.
 \end{itemize}
 
 \section{Interface}
