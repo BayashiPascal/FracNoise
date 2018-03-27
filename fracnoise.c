@@ -30,7 +30,7 @@ int PerlinNoisePermutation[256] = {
 
 // ================ Functions definition ====================
 
-inline float fade(float t);
+inline float fade(float t, float s);
 inline float lerp(float t, float a, float b);
 inline float grad(int hash, float x, float y, float z);
 
@@ -94,7 +94,8 @@ void PerlinNoiseFree(PerlinNoise** that) {
 // 3 values, and the noise always equal 0.5 at unit values, so
 // noise(0.0) == noise(1.0) == noise(2.0) == ... == 0.5
 // Return a value in [0.0, 1.0]
-float _PerlinNoiseGet(PerlinNoise* that, VecFloat* p) {
+float _PerlinNoiseGet(PerlinNoise* that, VecFloat* p, 
+  float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -112,27 +113,40 @@ float _PerlinNoiseGet(PerlinNoise* that, VecFloat* p) {
       VecGetDim(p));
     PBErrCatch(FracNoiseErr);
   }
+  if (squareness < 0.0 || squareness > 1.0) {
+    FracNoiseErr->_type = PBErrTypeInvalidArg;
+    sprintf(FracNoiseErr->_msg, "'square' is invalid (0<=%f<1)", 
+      squareness);
+    PBErrCatch(FracNoiseErr);
+  }
 #endif
   if (VecGetDim(p) == 1)
-    return _PerlinNoiseGet1D(that, VecGet(p, 0));
+    return _PerlinNoiseGet1D(that, VecGet(p, 0), squareness);
   else if (VecGetDim(p) == 2)
-    return _PerlinNoiseGet2D(that, (VecFloat2D*)p);
+    return _PerlinNoiseGet2D(that, (VecFloat2D*)p, squareness);
   else if (VecGetDim(p) == 3)
-    return _PerlinNoiseGet3D(that, (VecFloat3D*)p);
+    return _PerlinNoiseGet3D(that, (VecFloat3D*)p, squareness);
   else if (VecGetDim(p) > 3) {
     VecFloat* p3 = VecGetNewDim(p, 3);
-    float ret = _PerlinNoiseGet3D(that, (VecFloat3D*)p3);
+    float ret = _PerlinNoiseGet3D(that, (VecFloat3D*)p3, squareness);
     VecFree(&p3);
     return ret;
   } else
     return 0.0;
 }
 
-float _PerlinNoiseGet1D(PerlinNoise* that, float p) {
+float _PerlinNoiseGet1D(PerlinNoise* that, float p, 
+  float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
     sprintf(FracNoiseErr->_msg, "'that' is null");
+    PBErrCatch(FracNoiseErr);
+  }
+  if (squareness < 0.0 || squareness > 1.0) {
+    FracNoiseErr->_type = PBErrTypeInvalidArg;
+    sprintf(FracNoiseErr->_msg, "'square' is invalid (0<=%f<1)", 
+      squareness);
     PBErrCatch(FracNoiseErr);
   }
 #endif
@@ -144,7 +158,7 @@ float _PerlinNoiseGet1D(PerlinNoise* that, float p) {
   // Get the relative coordinates of the point in the cube
   q = p - floor(p);
   // Fade input for smooth transition
-  u = SmootherStep(q);
+  u = fade(q, squareness);
   // Hash coordinates of the segment extremities
   int A = that->_p[pInt]; 
   int AA = that->_p[A]; 
@@ -159,7 +173,8 @@ float _PerlinNoiseGet1D(PerlinNoise* that, float p) {
   return res;
 }
 
-float _PerlinNoiseGet2D(PerlinNoise* that, VecFloat2D* p) {
+float _PerlinNoiseGet2D(PerlinNoise* that, VecFloat2D* p, 
+  float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -177,6 +192,12 @@ float _PerlinNoiseGet2D(PerlinNoise* that, VecFloat2D* p) {
       VecGetDim(p));
     PBErrCatch(FracNoiseErr);
   }
+  if (squareness < 0.0 || squareness > 1.0) {
+    FracNoiseErr->_type = PBErrTypeInvalidArg;
+    sprintf(FracNoiseErr->_msg, "'square' is invalid (0<=%f<1)", 
+      squareness);
+    PBErrCatch(FracNoiseErr);
+  }
 #endif
   int pInt[2];
   VecFloat2D q = VecFloatCreateStatic2D();
@@ -187,7 +208,7 @@ float _PerlinNoiseGet2D(PerlinNoise* that, VecFloat2D* p) {
     // Get the relative coordinates of the point in the cube
     VecSet(&q, i, VecGet(p, i) - floor(VecGet(p, i)));
     // Fade input for smooth transition
-    VecSet(&u, i, SmootherStep(VecGet(&q, i)));
+    VecSet(&u, i, fade(VecGet(&q, i), squareness));
   }
   // Hash coordinates of the 8 cube corners
   int A = that->_p[pInt[0]] + pInt[1]; 
@@ -227,7 +248,8 @@ float _PerlinNoiseGet2D(PerlinNoise* that, VecFloat2D* p) {
   return res;
 }
 
-float _PerlinNoiseGet3D(PerlinNoise* that, VecFloat3D* p) {
+float _PerlinNoiseGet3D(PerlinNoise* that, VecFloat3D* p, 
+  float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -245,6 +267,12 @@ float _PerlinNoiseGet3D(PerlinNoise* that, VecFloat3D* p) {
       VecGetDim(p));
     PBErrCatch(FracNoiseErr);
   }
+  if (squareness < 0.0 || squareness > 1.0) {
+    FracNoiseErr->_type = PBErrTypeInvalidArg;
+    sprintf(FracNoiseErr->_msg, "'squareness' is invalid (0<=%f<1)", 
+      squareness);
+    PBErrCatch(FracNoiseErr);
+  }
 #endif
   int pInt[3];
   VecFloat3D q = VecFloatCreateStatic3D();
@@ -255,7 +283,7 @@ float _PerlinNoiseGet3D(PerlinNoise* that, VecFloat3D* p) {
     // Get the relative coordinates of the point in the cube
     VecSet(&q, i, VecGet(p, i) - floor(VecGet(p, i)));
     // Fade input for smooth transition
-    VecSet(&u, i, SmootherStep(VecGet(&q, i)));
+    VecSet(&u, i, fade(VecGet(&q, i), squareness));
   }
   // Hash coordinates of the 8 cube corners
   int A = that->_p[pInt[0]] + pInt[1]; 
@@ -296,8 +324,9 @@ float _PerlinNoiseGet3D(PerlinNoise* that, VecFloat3D* p) {
   return res;
 }
 
-inline float fade(float t) { 
-  float ret = t * t * t * (t * (t * 6.0 - 15.0) + 10.0); 
+inline float fade(float t, float s) { 
+  float ret = 
+    (1.0 - s) * t * t * t * (t * (t * 6.0 - 15.0) + 10.0) + s * t; 
   return ret;
 }
 
@@ -352,6 +381,7 @@ PerlinNoisePod* PerlinNoisePodCreate(VecShort2D* dim, VecFloat3D* seed) {
   pod->_bound = NULL;
   pod->_border = 0.1;
   pod->_smooth = 1.0;
+  pod->_square = 0.0;
   pod->_scaleIn = VecFloatCreate(VecGet(dim, 0));
   for (int i = VecGet(dim, 0); i--;)
     VecSet(pod->_scaleIn, i, 1.0);
@@ -385,7 +415,7 @@ void PerlinNoisePodFree(PerlinNoisePod** that) {
 // If there is boundary, it's 0.0 outside of boundary and else it's
 // the position depth in the Shapoid corrected with the border as follow:
 // if depth > border the depth is set to 1.0, else the depth is
-// SmootherStep from (0.0, border) to (0.0, 1.0)
+// fade from (0.0, border) to (0.0, 1.0)
 // 'pos' 's dimension must be equal to the Shapoid's dimension
 float PerlinNoisePodGetInsideness(PerlinNoisePod* that, VecFloat* pos) {
 #if BUILDMODE == 0
@@ -420,7 +450,7 @@ float PerlinNoisePodGetInsideness(PerlinNoisePod* that, VecFloat* pos) {
       // Correct insideness with border: inside the border apply a 
       // smootherstep transition and outside set to 1.0
       if (inside < border)
-        inside = SmootherStep(inside / border);
+        inside = fade(inside / border, 0.0);
       else
         inside = 1.0;
     }
@@ -549,7 +579,8 @@ VecFloat* _FracNoiseGet(FracNoise* that, VecFloat* pos) {
           // Apply the seed
           VecRotAxis(&pRot, PerlinNoisePodSeed(pod), theta);
           // Get the Perlin noise value
-          float val = _PerlinNoiseGet3D(PerlinNoisePodNoise(pod), &pRot);
+          float val = _PerlinNoiseGet3D(PerlinNoisePodNoise(pod), &pRot,
+            PerlinNoisePodGetSquare(pod));
           // Add the value for the current dimension at the current 
           // fractal level
           VecSet(resPod, iDim, VecGet(resPod, iDim) + val * fractCoeff);

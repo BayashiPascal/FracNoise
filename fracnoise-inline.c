@@ -154,6 +154,21 @@ float PerlinNoisePodGetSmooth(PerlinNoisePod* that) {
   return that->_smooth;
 }
 
+// Get the squareness of the PerlinNoisePod 'that'
+#if BUILDMODE != 0 
+inline 
+#endif 
+float PerlinNoisePodGetSquare(PerlinNoisePod* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    FracNoiseErr->_type = PBErrTypeNullPointer;
+    sprintf(FracNoiseErr->_msg, "'that' is null");
+    PBErrCatch(FracNoiseErr);
+  }
+#endif
+  return that->_square;
+}
+
 // Set the seed of the PerlinNoisePod 'that' to a copy of 'seed'
 // If 'seed' is the vector null the seed is left unchanged 
 #if BUILDMODE != 0 
@@ -389,6 +404,29 @@ void PerlinNoisePodSetSmooth(PerlinNoisePod* that, float smooth) {
   that->_smooth = smooth;
 }
 
+// Set the squareness of the PerlinNoisePod 'that' to 'square'
+// 'square' must be in [0.0, 1.0]
+// 0.0 is the standard Perlin noise, 1.0 is the Perlin noise without
+// the smoother function on input parameter
+#if BUILDMODE != 0 
+inline 
+#endif 
+void PerlinNoisePodSetSquare(PerlinNoisePod* that, float square) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    FracNoiseErr->_type = PBErrTypeNullPointer;
+    sprintf(FracNoiseErr->_msg, "'that' is null");
+    PBErrCatch(FracNoiseErr);
+  }
+  if (square < 0.0 || square > 1.0) {
+    FracNoiseErr->_type = PBErrTypeInvalidArg;
+    sprintf(FracNoiseErr->_msg, "'square' is invalid (0<=%f<1)", square);
+    PBErrCatch(FracNoiseErr);
+  }
+#endif
+  // Set the new coefficient
+  that->_square = square;
+}
 
 // -------------- FracNoise
 

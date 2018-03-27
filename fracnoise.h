@@ -41,11 +41,17 @@ void PerlinNoiseFree(PerlinNoise** that);
 // between 2 values, u in [0.0, 2.0] will be interpolated between
 // 3 values, and the noise always equal 0.5 at unit values, so
 // noise(0.0) == noise(1.0) == noise(2.0) == ... == 0.5
+// _PerlinNoiseGet3D takes a third argument which is the squareness
+// in [0.0,1.0]
 // Return a value in [0.0, 1.0]
-float _PerlinNoiseGet(PerlinNoise* noise, VecFloat* u);
-float _PerlinNoiseGet1D(PerlinNoise* noise, float u);
-float _PerlinNoiseGet2D(PerlinNoise* noise, VecFloat2D* u);
-float _PerlinNoiseGet3D(PerlinNoise* noise, VecFloat3D* u);
+float _PerlinNoiseGet(PerlinNoise* noise, VecFloat* u, 
+  float squareness);
+float _PerlinNoiseGet1D(PerlinNoise* noise, float u, 
+  float squareness);
+float _PerlinNoiseGet2D(PerlinNoise* noise, VecFloat2D* u, 
+  float squareness);
+float _PerlinNoiseGet3D(PerlinNoise* noise, VecFloat3D* u, 
+  float squareness);
 
 // Set the permutations of the PerlinNoise 'that' to 'permut'
 // 'permut' is an array of 256 int
@@ -74,6 +80,8 @@ typedef struct PerlinNoisePod {
   float _fractalCoeff;
   // Smoothness
   float _smooth;
+  // Squareness
+  float _square;
 } PerlinNoisePod;
 
 // ================ Functions declaration ====================
@@ -149,6 +157,12 @@ inline
 #endif 
 float PerlinNoisePodGetSmooth(PerlinNoisePod* that);
 
+// Get the squareness of the PerlinNoisePod 'that'
+#if BUILDMODE != 0 
+inline 
+#endif 
+float PerlinNoisePodGetSquare(PerlinNoisePod* that);
+
 // Set the seed of the PerlinNoisePod 'that' to a copy of 'seed'
 // If 'seed' is the vector null the seed is left unchanged 
 #if BUILDMODE != 0 
@@ -220,6 +234,15 @@ void PerlinNoisePodSetBorder(PerlinNoisePod* that, float border);
 inline 
 #endif 
 void PerlinNoisePodSetSmooth(PerlinNoisePod* that, float smooth);
+
+// Set the squareness of the PerlinNoisePod 'that' to 'square'
+// 'square' must be in [0.0, 1.0]
+// 0.0 is the standard Perlin noise, 1.0 is the Perlin noise without
+// the smoother function on input parameter
+#if BUILDMODE != 0 
+inline 
+#endif 
+void PerlinNoisePodSetSquare(PerlinNoisePod* that, float square);
 
 // Get the insideness in boundary of the PerlinNoisePod 'that' at 
 // position 'pos'
@@ -307,7 +330,7 @@ bool FracNoiseExportDF3(FracNoise* that, VecFloat3D* range,
   float: _PerlinNoiseGet1D, \
   VecFloat2D*: _PerlinNoiseGet2D, \
   VecFloat3D*: _PerlinNoiseGet3D, \
-  default:PBErrInvalidPolymorphism) (Noise, U)
+  default:PBErrInvalidPolymorphism) (Noise, U, 0.0)
 
 #define PerlinNoisePodSetBound(Pod, Bound) _Generic(Bound, \
   Shapoid*: _PerlinNoisePodSetBound, \

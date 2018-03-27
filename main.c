@@ -123,6 +123,8 @@ void UnitTestPerlinNoisePodCreateFree() {
   PerlinNoisePod* pod = PerlinNoisePodCreate(&dim, &seed);
   if (pod->_bound != NULL || 
     ISEQUALF(pod->_border, 0.1) == false ||
+    ISEQUALF(pod->_smooth, 1.0) == false ||
+    ISEQUALF(pod->_square, 0.0) == false ||
     ISEQUALF(VecGet(pod->_scaleIn, 0), 1.0) == false ||
     ISEQUALF(VecGet(pod->_scaleIn, 1), 1.0) == false ||
     ISEQUALF(VecGet(pod->_scaleIn, 2), 1.0) == false ||
@@ -270,6 +272,18 @@ void UnitTestPerlinNoisePodSetGet() {
   if (ISEQUALF(PerlinNoisePodGetSmooth(pod), 0.25) == false) {
     FracNoiseErr->_type = PBErrTypeUnitTestFailed;
     sprintf(FracNoiseErr->_msg, "PerlinNoisePodSetSmooth NOK");
+    PBErrCatch(FracNoiseErr);
+  }
+  if (ISEQUALF(PerlinNoisePodGetSquare(pod), pod->_square) == 
+    false) {
+    FracNoiseErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(FracNoiseErr->_msg, "PerlinNoisePodGetSquare NOK");
+    PBErrCatch(FracNoiseErr);
+  }
+  PerlinNoisePodSetSquare(pod, 0.1);
+  if (ISEQUALF(PerlinNoisePodGetSquare(pod), 0.1) == false) {
+    FracNoiseErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(FracNoiseErr->_msg, "PerlinNoisePodSetSquare NOK");
     PBErrCatch(FracNoiseErr);
   }
   PerlinNoisePodFree(&pod);
