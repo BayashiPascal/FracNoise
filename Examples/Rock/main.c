@@ -8,7 +8,7 @@
 #define RANDOMSEED 30
 
 typedef enum {
-  rockA
+  rockA, rockB
 } typeRock;
 
 void MakeRock(typeRock type, int rndSeed, char* fileName, 
@@ -26,6 +26,12 @@ void MakeRock(typeRock type, int rndSeed, char* fileName,
     scaleInXZ = 1.0 + 4.0 * rnd();
     scaleInY = 1.0 + 4.0 * rnd();
     scaleOut = 0.1 + 0.2 * rnd();
+  } else if (type == rockB) {
+    fractCoeff = 0.1;
+    smooth = 1.0;
+    scaleInXZ = 2.0 * rnd();
+    scaleInY = 2.0 * rnd();
+    scaleOut = 0.1 + 0.2 * rnd();
   }
   // Create the FracNoise for the rock
   VecShort2D dim = VecShortCreateStatic2D();
@@ -35,6 +41,8 @@ void MakeRock(typeRock type, int rndSeed, char* fileName,
     VecSet(&seed, i, rnd());
   FracNoise* rock = FracNoiseCreate(&dim, &seed);
   PerlinNoisePod* pod = FracNoiseGetNoise(rock, 0);
+  if (type == rockB)
+    PerlinNoisePodSetSquare(pod, 0.8);
   VecFloat3D scaleIn = VecFloatCreateStatic3D();
   for (int i = 3; i--;)
     VecSet(&scaleIn, i, (i == 1 ? scaleInY : scaleInXZ));
@@ -46,7 +54,8 @@ void MakeRock(typeRock type, int rndSeed, char* fileName,
   for (int i = 3; i--;)
     VecSet(&sOut, i, -0.5 * scaleOut);
   PerlinNoisePodSetShiftOut(pod, &sOut);
-  PerlinNoisePodSetFractLvl(pod, 1);
+  if (type != rockB)
+    PerlinNoisePodSetFractLvl(pod, 1);
   PerlinNoisePodSetFractCoeff(pod, fractCoeff);
   PerlinNoisePodSetSmooth(pod, smooth);
   // Open the file to save the rock mesh
@@ -120,16 +129,18 @@ void MakeRock(typeRock type, int rndSeed, char* fileName,
   fclose(fileRock);
 }
 
-int main() {
+int main(int argc, char** argv) {
   char* fileName = "./rock.inc";
 
   VecFloat3D radiusRock = VecFloatCreateStatic3D();
   VecSet(&radiusRock, 0, 1.0);
   VecSet(&radiusRock, 1, 0.5);
   VecSet(&radiusRock, 2, 1.0);
-  MakeRock(rockA, RANDOMSEED, fileName, &radiusRock);
-
+  //MakeRock(rockA, RANDOMSEED, fileName, &radiusRock);
+  MakeRock(rockB, time(NULL), fileName, &radiusRock);
   system("make rock");
+  //MakeRock(rockA, time(NULL), argv[1], &radiusRock);
+
 
   // Return success code
   return 0;
