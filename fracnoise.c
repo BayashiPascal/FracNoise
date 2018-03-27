@@ -559,16 +559,19 @@ VecFloat* _FracNoiseGet(FracNoise* that, VecFloat* pos) {
         // Update the input position at this level
         VecScale(p, 1.0 / fc);
       }
-      // Apply the insideness and smoothness
+      // Apply the smoothness
       for (int i = VecGetDim(resPod); i--;)
         VecSet(resPod, i, 
-          pow(VecGet(resPod, i) * inside, PerlinNoisePodGetSmooth(pod)));
+          pow(VecGet(resPod, i), PerlinNoisePodGetSmooth(pod)));
       // Scale the output
       for (int i = VecGetDim(resPod); i--;)
         VecSet(resPod, i, 
           VecGet(resPod, i) * VecGet(PerlinNoisePodScaleOut(pod), i));
       // Shift the output
       VecOp(resPod, 1.0, PerlinNoisePodShiftOut(pod), 1.0);
+      // Apply the insideness
+      for (int i = VecGetDim(resPod); i--;)
+        VecSet(resPod, i, VecGet(resPod, i) * inside);
       // Add the result for this pod
       VecOp(res, 1.0, resPod, 1.0);
       // Free memory
