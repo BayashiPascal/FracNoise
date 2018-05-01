@@ -5,12 +5,14 @@ GENBRUSHDIR=../GenBrush
 GSETDIR=../GSet
 SHAPOIDDIR=../Shapoid
 BCURVEDIR=../BCurve
+GTREEDIR=../GTree
+PBJSONDIR=../PBJson
 
 # Build mode
 # 0: development (max safety, no optimisation)
 # 1: release (min safety, optimisation)
 # 2: fast and furious (no safety, optimisation)
-BUILDMODE=0
+BUILDMODE=1
 
 # 0: monolith version, the GBSurface is rendered toward a TGA image
 # 1: GTK version, the GBSurface is rendered toward a TGA image or 
@@ -19,7 +21,7 @@ BUILDWITHGRAPHICLIB=0
 
 include $(PBERRDIR)/Makefile.inc
 
-INCPATH=-I./ -I$(PBERRDIR)/ -I$(PBMATHDIR)/ -I$(GENBRUSHDIR)/ -I$(SHAPOIDDIR)/ -I$(BCURVEDIR)/ -I$(GSETDIR)/
+INCPATH=-I./ -I$(PBERRDIR)/ -I$(PBMATHDIR)/ -I$(GENBRUSHDIR)/ -I$(SHAPOIDDIR)/ -I$(BCURVEDIR)/ -I$(GSETDIR)/ -I$(PBJSONDIR)/ -I$(GTREEDIR)/
 BUILDOPTIONS=$(BUILDPARAM) $(INCPATH) -ggdb
 
 # compiler
@@ -28,11 +30,17 @@ COMPILER=gcc
 #rules
 all : main
 
-main: main.o pberr.o bcurve.o shapoid.o pbmath.o gset.o genbrush.o fracnoise.o Makefile 
-	$(COMPILER) main.o pberr.o bcurve.o shapoid.o pbmath.o gset.o genbrush.o fracnoise.o $(LINKOPTIONS) -o main $(GTKLINK) $(CAIROLINK)
+main: main.o pberr.o bcurve.o shapoid.o pbmath.o gset.o genbrush.o fracnoise.o pbjson.o gtree.o Makefile 
+	$(COMPILER) main.o pberr.o bcurve.o shapoid.o pbmath.o gset.o pbjson.o gtree.o genbrush.o fracnoise.o $(LINKOPTIONS) -o main $(GTKLINK) $(CAIROLINK)
 
 main.o : main.c $(PBERRDIR)/pberr.h $(SHAPOIDDIR)/shapoid.h $(SHAPOIDDIR)/shapoid-inline.c $(PBMATHDIR)/pbmath.h $(PBMATHDIR)/pbmath-inline.c $(GSETDIR)/gset.h $(GSETDIR)/gset-inline.c $(BCURVEDIR)/bcurve.h $(BCURVEDIR)/bcurve-inline.c $(GENBRUSHDIR)/genbrush.h $(GENBRUSHDIR)/genbrush-inline.c fracnoise.c fracnoise-inline.c fracnoise.h Makefile
 	$(COMPILER) $(BUILDOPTIONS) -c main.c
+
+pbjson.o : $(PBJSONDIR)/pbjson.c $(PBJSONDIR)/pbjson-inline.c $(PBJSONDIR)/pbjson.h Makefile
+	$(COMPILER) $(BUILDOPTIONS) -c $(PBJSONDIR)/pbjson.c
+
+gtree.o : $(GTREEDIR)/gtree.c $(GTREEDIR)/gtree.h $(GTREEDIR)/gtree-inline.c Makefile $(GSETDIR)/gset-inline.c $(GSETDIR)/gset.h $(PBERRDIR)/pberr.c $(PBERRDIR)/pberr.h
+	$(COMPILER) $(BUILDOPTIONS) -c $(GTREEDIR)/gtree.c
 
 fracnoise.o: fracnoise.h fracnoise.c fracnoise-inline.c $(PBMATHDIR)/pbmath.h Makefile
 	$(COMPILER) $(BUILDOPTIONS) -c fracnoise.c
