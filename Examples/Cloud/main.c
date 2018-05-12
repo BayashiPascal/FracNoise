@@ -14,6 +14,7 @@ typedef enum {
 
 void MakeCloud(typeCloud type, int rndSeed, char* fileName) {
   srandom(rndSeed);
+  //srandom(time(NULL));
   // Set parameters according to type
   float smoothness = 1.0;
   float nbPodMin = 50.0;
@@ -120,12 +121,14 @@ void MakeCloud(typeCloud type, int rndSeed, char* fileName) {
   
 }
 
-int main() {
+int main(int argc, char** argv) {
+  (void)argc;(void)argv;
   char* fileName = "./cloud.df3";
-
   MakeCloud(cumulusB, RANDOMSEED, fileName);
+  int ret = system("make DF3");(void)ret;
+  
+  //MakeCloud((typeCloud)atoi(argv[1]), RANDOMSEED, argv[2]);
 
-  system("make DF3");
 
   // Return success code
   return 0;
