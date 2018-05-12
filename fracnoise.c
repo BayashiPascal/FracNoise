@@ -59,7 +59,8 @@ PerlinNoise PerlinNoiseCreateStatic(void) {
 
 // Set the permutations of the PerlinNoise 'that' to 'permut'
 // 'permut' is an array of 256 int
-void PerlinNoiseSetPermut(PerlinNoise* that, int* permut) {
+void PerlinNoiseSetPermut(PerlinNoise* const that, 
+  const int* const permut) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -94,8 +95,8 @@ void PerlinNoiseFree(PerlinNoise** that) {
 // 3 values, and the noise always equal 0.5 at unit values, so
 // noise(0.0) == noise(1.0) == noise(2.0) == ... == 0.5
 // Return a value in [0.0, 1.0]
-float _PerlinNoiseGet(PerlinNoise* that, VecFloat* p, 
-  float squareness) {
+float _PerlinNoiseGet(const PerlinNoise* const that, 
+  const VecFloat* const p, const float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -135,8 +136,8 @@ float _PerlinNoiseGet(PerlinNoise* that, VecFloat* p,
     return 0.0;
 }
 
-float _PerlinNoiseGet1D(PerlinNoise* that, float p, 
-  float squareness) {
+float _PerlinNoiseGet1D(const PerlinNoise* const that, const float p, 
+  const float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -173,8 +174,8 @@ float _PerlinNoiseGet1D(PerlinNoise* that, float p,
   return res;
 }
 
-float _PerlinNoiseGet2D(PerlinNoise* that, VecFloat2D* p, 
-  float squareness) {
+float _PerlinNoiseGet2D(const PerlinNoise* const that, 
+  const VecFloat2D* const p, float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -248,8 +249,8 @@ float _PerlinNoiseGet2D(PerlinNoise* that, VecFloat2D* p,
   return res;
 }
 
-float _PerlinNoiseGet3D(PerlinNoise* that, VecFloat3D* p, 
-  float squareness) {
+float _PerlinNoiseGet3D(const PerlinNoise* const that, 
+  const VecFloat3D* const p, const float squareness) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -352,7 +353,8 @@ float grad(int hash, float x, float y, float z) {
 // Default values:
 // bound = NULL, border = 0.1, scaleIn/Out = 1.0
 // fractalLvl = 0, fractalCoeff = 0.1, smooth = 1.0
-PerlinNoisePod* PerlinNoisePodCreate(VecShort2D* dim, VecFloat3D* seed) {
+PerlinNoisePod* PerlinNoisePodCreate(const VecShort2D* const dim, 
+  const VecFloat3D* const seed) {
 #if BUILDMODE == 0
   if (VecGet(dim, 0) < 1 || VecGet(dim, 0) > 3 ||
     VecGet(dim, 1) < 1) {
@@ -417,7 +419,8 @@ void PerlinNoisePodFree(PerlinNoisePod** that) {
 // if depth > border the depth is set to 1.0, else the depth is
 // fade from (0.0, border) to (0.0, 1.0)
 // 'pos' 's dimension must be equal to the Shapoid's dimension
-float PerlinNoisePodGetInsideness(PerlinNoisePod* that, VecFloat* pos) {
+float PerlinNoisePodGetInsideness(PerlinNoisePod* const that, 
+  const VecFloat* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -468,7 +471,8 @@ float PerlinNoisePodGetInsideness(PerlinNoisePod* that, VecFloat* pos) {
 // The number of output can be any value greater or equal to 1
 // If seed is null it is replaced by a default seed
 // Return null if the number of dimensions are invalid
-FracNoise* FracNoiseCreate(VecShort2D* dim, VecFloat3D* seed) {
+FracNoise* FracNoiseCreate(const VecShort2D* const dim, 
+  const VecFloat3D* const seed) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -516,7 +520,8 @@ void FracNoiseFree(FracNoise** that) {
 }
 
 // Get the noise value of the FracNoise 'that' at 'pos'
-VecFloat* _FracNoiseGet(FracNoise* that, VecFloat* pos) {
+VecFloat* _FracNoiseGet(const FracNoise* const that, 
+  const VecFloat* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -624,8 +629,9 @@ VecFloat* _FracNoiseGet(FracNoise* that, VecFloat* pos) {
 // The output values are automatically scaled 
 // If the arguments are invalid, the df3 file is not generated.
 // Return true if the df3 has been succesfully created, false else.
-bool FracNoiseExportDF3(FracNoise* that, VecFloat3D* range, 
-  VecShort3D* nbSample, int res, bool rescale, char* fileName) {
+bool FracNoiseExportDF3(const FracNoise* const that, 
+  const VecFloat3D* const range, const VecShort3D* const nbSample, 
+  const int res, const bool rescale, const char* const fileName) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;

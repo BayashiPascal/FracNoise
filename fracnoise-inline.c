@@ -8,7 +8,7 @@
 #if BUILDMODE != 0 
 inline 
 #endif 
-PerlinNoise* PerlinNoisePodNoise(PerlinNoisePod* that) {
+const PerlinNoise* PerlinNoisePodNoise(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -23,7 +23,7 @@ PerlinNoise* PerlinNoisePodNoise(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecFloat3D* PerlinNoisePodSeed(PerlinNoisePod* that) {
+VecFloat3D* PerlinNoisePodSeed(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -31,14 +31,14 @@ VecFloat3D* PerlinNoisePodSeed(PerlinNoisePod* that) {
     PBErrCatch(FracNoiseErr);
   }
 #endif
-  return &(that->_seed);
+  return (VecFloat3D*)&(that->_seed);
 }
 
 // Get the bound of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
 inline 
 #endif 
-Shapoid* PerlinNoisePodBound(PerlinNoisePod* that) {
+Shapoid* PerlinNoisePodBound(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -53,7 +53,7 @@ Shapoid* PerlinNoisePodBound(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecFloat* PerlinNoisePodScaleIn(PerlinNoisePod* that) {
+VecFloat* PerlinNoisePodScaleIn(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -68,7 +68,7 @@ VecFloat* PerlinNoisePodScaleIn(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecFloat* PerlinNoisePodScaleOut(PerlinNoisePod* that) {
+VecFloat* PerlinNoisePodScaleOut(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -83,7 +83,7 @@ VecFloat* PerlinNoisePodScaleOut(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecFloat* PerlinNoisePodShiftOut(PerlinNoisePod* that) {
+VecFloat* PerlinNoisePodShiftOut(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -98,7 +98,7 @@ VecFloat* PerlinNoisePodShiftOut(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-int PerlinNoisePodGetFractLvl(PerlinNoisePod* that) {
+int PerlinNoisePodGetFractLvl(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -113,7 +113,7 @@ int PerlinNoisePodGetFractLvl(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-float PerlinNoisePodGetFractCoeff(PerlinNoisePod* that) {
+float PerlinNoisePodGetFractCoeff(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -128,7 +128,7 @@ float PerlinNoisePodGetFractCoeff(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-float PerlinNoisePodGetBorder(PerlinNoisePod* that) {
+float PerlinNoisePodGetBorder(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -143,7 +143,7 @@ float PerlinNoisePodGetBorder(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-float PerlinNoisePodGetSmooth(PerlinNoisePod* that) {
+float PerlinNoisePodGetSmooth(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -158,7 +158,7 @@ float PerlinNoisePodGetSmooth(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-float PerlinNoisePodGetSquare(PerlinNoisePod* that) {
+float PerlinNoisePodGetSquare(const PerlinNoisePod* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -174,7 +174,8 @@ float PerlinNoisePodGetSquare(PerlinNoisePod* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void PerlinNoisePodSetSeed(PerlinNoisePod* that, VecFloat3D* seed) {
+void PerlinNoisePodSetSeed(PerlinNoisePod* const that, 
+  const VecFloat3D* const seed) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -202,7 +203,8 @@ void PerlinNoisePodSetSeed(PerlinNoisePod* that, VecFloat3D* seed) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void _PerlinNoisePodSetBound(PerlinNoisePod* that, Shapoid* bound) {
+void _PerlinNoisePodSetBound(PerlinNoisePod* const that, 
+  Shapoid* const bound) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -233,7 +235,8 @@ void _PerlinNoisePodSetBound(PerlinNoisePod* that, Shapoid* bound) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void _PerlinNoisePodSetScaleIn(PerlinNoisePod* that, VecFloat* scale) {
+void _PerlinNoisePodSetScaleIn(PerlinNoisePod* const that, 
+  const VecFloat* const scale) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -264,7 +267,7 @@ void _PerlinNoisePodSetScaleIn(PerlinNoisePod* that, VecFloat* scale) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void _PerlinNoisePodSetScaleOut(PerlinNoisePod* that, VecFloat* scale) {
+void _PerlinNoisePodSetScaleOut(PerlinNoisePod* const that, const VecFloat* const scale) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -295,7 +298,8 @@ void _PerlinNoisePodSetScaleOut(PerlinNoisePod* that, VecFloat* scale) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void _PerlinNoisePodSetShiftOut(PerlinNoisePod* that, VecFloat* shift) {
+void _PerlinNoisePodSetShiftOut(PerlinNoisePod* const that, 
+  const VecFloat* const shift) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -324,7 +328,7 @@ void _PerlinNoisePodSetShiftOut(PerlinNoisePod* that, VecFloat* shift) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void PerlinNoisePodSetFractLvl(PerlinNoisePod* that, int lvl) {
+void PerlinNoisePodSetFractLvl(PerlinNoisePod* const that, const int lvl) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -347,7 +351,8 @@ void PerlinNoisePodSetFractLvl(PerlinNoisePod* that, int lvl) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void PerlinNoisePodSetFractCoeff(PerlinNoisePod* that, float coeff) {
+void PerlinNoisePodSetFractCoeff(PerlinNoisePod* const that, 
+  const float coeff) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -368,7 +373,8 @@ void PerlinNoisePodSetFractCoeff(PerlinNoisePod* that, float coeff) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void PerlinNoisePodSetBorder(PerlinNoisePod* that, float border) {
+void PerlinNoisePodSetBorder(PerlinNoisePod* const that, 
+  const float border) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -387,7 +393,8 @@ void PerlinNoisePodSetBorder(PerlinNoisePod* that, float border) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void PerlinNoisePodSetSmooth(PerlinNoisePod* that, float smooth) {
+void PerlinNoisePodSetSmooth(PerlinNoisePod* const that, 
+  const float smooth) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -411,7 +418,8 @@ void PerlinNoisePodSetSmooth(PerlinNoisePod* that, float smooth) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void PerlinNoisePodSetSquare(PerlinNoisePod* that, float square) {
+void PerlinNoisePodSetSquare(PerlinNoisePod* const that, 
+  const float square) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -436,7 +444,7 @@ void PerlinNoisePodSetSquare(PerlinNoisePod* that, float square) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecShort2D* FracNoiseDim(FracNoise* that) {
+const VecShort2D* FracNoiseDim(const FracNoise* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -451,7 +459,7 @@ VecShort2D* FracNoiseDim(FracNoise* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-GSet* FracNoisePods(FracNoise* that) {
+const GSet* FracNoisePods(const FracNoise* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -468,7 +476,8 @@ GSet* FracNoisePods(FracNoise* that) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-PerlinNoisePod* FracNoiseGetNoise(FracNoise* that, int iNoise) {
+PerlinNoisePod* FracNoiseGetNoise(const FracNoise* const that, 
+  const int iNoise) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -487,7 +496,8 @@ PerlinNoisePod* FracNoiseGetNoise(FracNoise* that, int iNoise) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-PerlinNoisePod* FracNoiseAddNoise(FracNoise* that, VecFloat3D* seed) {
+PerlinNoisePod* FracNoiseAddNoise(FracNoise* const that, 
+  const VecFloat3D* const seed) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
@@ -507,7 +517,8 @@ PerlinNoisePod* FracNoiseAddNoise(FracNoise* that, VecFloat3D* seed) {
 #if BUILDMODE != 0 
 inline 
 #endif 
-void FracNoiseRemoveNoise(FracNoise* that, PerlinNoisePod* pod) {
+void FracNoiseRemoveNoise(FracNoise* const that, 
+  const PerlinNoisePod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     FracNoiseErr->_type = PBErrTypeNullPointer;
