@@ -270,7 +270,7 @@ float PerlinNoisePodGetInsideness(PerlinNoisePod* const that,
 
 typedef struct FracNoise {
   // Dimensions (input, output)
-  VecShort2D _dim;
+  const VecShort2D _dim;
   // Set of PerlinNoisePod
   GSet _noises;
 } FracNoise;

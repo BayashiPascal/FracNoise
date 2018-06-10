@@ -9,8 +9,8 @@
 
 // -------------- PerlinNoise
 
-// Declare the permutations for the Perlin noise
-int PerlinNoisePermutation[256] = {
+// Declare the permutations for the default Perlin noise
+const int PerlinNoisePermutation[256] = {
   151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,
   103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,
   26,197,62,94,252,219,203,117,35,11,32,57,177,33,88,237,149,56,87,
@@ -494,8 +494,8 @@ FracNoise* FracNoiseCreate(const VecShort2D* const dim,
   // Declare the new FracNoise
   FracNoise* noise = PBErrMalloc(FracNoiseErr, sizeof(FracNoise));
   // Set properties
-  noise->_dim = VecShortCreateStatic2D();
-  noise->_dim = *dim;
+  *(VecShort2D*)&(noise->_dim) = VecShortCreateStatic2D();
+  *(VecShort2D*)&(noise->_dim) = *dim;
   noise->_noises = GSetCreateStatic();
   // Add a PerlinNoise
   PerlinNoisePod* pod = PerlinNoisePodCreate(dim, seed);
