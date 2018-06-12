@@ -19,7 +19,7 @@ int main() {
     VecSet(&seed, i, rnd());
   FracNoise* terrain = FracNoiseCreate(&dim, &seed);
   // --- main ground
-  PerlinNoisePod* ground = FracNoiseGetNoise(terrain, 0);
+  PerlinNoisePod* ground = FracNoisePod(terrain, 0);
   // scaleIn
   VecFloat2D scaleIn = VecFloatCreateStatic2D();
   float sIn = 1.0 / (float)HFDim;
