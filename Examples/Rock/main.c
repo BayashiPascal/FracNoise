@@ -32,7 +32,7 @@ void MakeRockA(typeRock type, int rndSeed, char* fileName,
   for (int i = 3; i--;)
     VecSet(&seed, i, rnd());
   FracNoise* rock = FracNoiseCreate(&dim, &seed);
-  PerlinNoisePod* pod = FracNoiseGetNoise(rock, 0);
+  PerlinNoisePod* pod = FracNoisePod(rock, 0);
   if (type == rockB)
     PerlinNoisePodSetSquare(pod, 0.8);
   VecFloat3D scaleIn = VecFloatCreateStatic3D();
@@ -142,7 +142,7 @@ void MakeRockB(typeRock type, int rndSeed, char* fileName,
   for (int i = 3; i--;)
     VecSet(&seed, i, rnd());
   FracNoise* rock = FracNoiseCreate(&dim, &seed);
-  PerlinNoisePod* pod = FracNoiseGetNoise(rock, 0);
+  PerlinNoisePod* pod = FracNoisePod(rock, 0);
   if (type == rockB)
     PerlinNoisePodSetSquare(pod, 0.8);
   VecFloat3D scaleIn = VecFloatCreateStatic3D();
