@@ -75,7 +75,7 @@ void MakeCloud(typeCloud type, int rndSeed, char* fileName) {
   PerlinNoisePod* pod = NULL;
   for (int iPod = nbPod; iPod--;) {
     if (iPod == 0)
-      pod = FracNoiseGetNoise(cloud, 0);
+      pod = FracNoisePod(cloud, 0);
     else {
       for (int i = 3; i--;)
         VecSet(&seed, i, rnd());
@@ -93,7 +93,7 @@ void MakeCloud(typeCloud type, int rndSeed, char* fileName) {
       float x = s + (1.0 - 2.0 * s) * rnd();
       if (type != cumulusB && i == 1 && x < 0.5)
         x = 0.5 - pow(0.5 - x, 2.0);
-      VecSet(ShapoidPos(bounds[iPod]), i, x);
+      ShapoidPosSet(bounds[iPod], i, x);
     }
     float sIn = 20.0 + 40.0 * rnd();
     for (int i = 3; i--;)
