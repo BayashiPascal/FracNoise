@@ -358,7 +358,7 @@ void UnitTestFracNoiseSetGet() {
     sprintf(FracNoiseErr->_msg, "FracNoisePods NOK");
     PBErrCatch(FracNoiseErr);
   }
-  if (FracNoiseGetNoise(noise, 0) != 
+  if (FracNoisePod(noise, 0) != 
     (PerlinNoisePod*)(noise->_noises._head->_data)) {
     FracNoiseErr->_type = PBErrTypeUnitTestFailed;
     sprintf(FracNoiseErr->_msg, "FracNoiseGetNoise NOK");
@@ -374,14 +374,14 @@ void UnitTestFracNoiseAddRemoveNoise() {
   FracNoise* noise = FracNoiseCreate(&dim, NULL);
   PerlinNoisePod* pod = FracNoiseAddNoise(noise, NULL);
   if (GSetNbElem(FracNoisePods(noise)) != 2 ||
-    pod != FracNoiseGetNoise(noise, 1)) {
+    pod != FracNoisePod(noise, 1)) {
     FracNoiseErr->_type = PBErrTypeUnitTestFailed;
     sprintf(FracNoiseErr->_msg, "FracNoiseAddNoise NOK");
     PBErrCatch(FracNoiseErr);
   }
   FracNoiseRemoveNoise(noise, pod);
   if (GSetNbElem(FracNoisePods(noise)) != 1 ||
-    pod == FracNoiseGetNoise(noise, 0)) {
+    pod == FracNoisePod(noise, 0)) {
     FracNoiseErr->_type = PBErrTypeUnitTestFailed;
     sprintf(FracNoiseErr->_msg, "FracNoiseRemoveNoise NOK");
     PBErrCatch(FracNoiseErr);
@@ -396,7 +396,7 @@ void UnitTestFracNoiseGet() {
   VecSet(&dim, 0, 2); VecSet(&dim, 1, 3);
   FracNoise* noise = FracNoiseCreate(&dim, NULL);
   // Set properties of the FracNoise
-  PerlinNoisePod* podA = FracNoiseGetNoise(noise, 0);
+  PerlinNoisePod* podA = FracNoisePod(noise, 0);
   VecFloat2D scaleIn = VecFloatCreateStatic2D();
   VecSet(&scaleIn, 0, 1.0); VecSet(&scaleIn, 1, 0.5);
   PerlinNoisePodSetScaleIn(podA, (VecFloat*)&scaleIn);

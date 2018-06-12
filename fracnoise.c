@@ -711,7 +711,7 @@ bool FracNoiseExportDF3(const FracNoise* const that,
   float min = 0.0;
   float max = 1.0;
   if (rescale) {
-    PerlinNoisePod* pod = FracNoiseGetNoise(that, 0);
+    PerlinNoisePod* pod = FracNoisePod(that, 0);
     if (VecGet(PerlinNoisePodScaleOut(pod), 0) > 0.0) {
       min = VecGet(PerlinNoisePodShiftOut(pod), 0);
       max = min + VecGet(PerlinNoisePodScaleOut(pod), 0);
@@ -721,7 +721,7 @@ bool FracNoiseExportDF3(const FracNoise* const that,
     }
     for (int iNoise = 1; iNoise < GSetNbElem(&(that->_noises)); 
       ++iNoise) {
-      pod = FracNoiseGetNoise(that, iNoise);
+      pod = FracNoisePod(that, iNoise);
       float minP = 0.0;
       float maxP = 1.0;
       if (VecGet(PerlinNoisePodScaleOut(pod), 0) > 0.0) {

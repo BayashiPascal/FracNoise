@@ -109,7 +109,7 @@ const PerlinNoise* PerlinNoisePodNoise(const PerlinNoisePod* const that);
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecFloat3D* PerlinNoisePodSeed(const PerlinNoisePod* const that);
+const VecFloat3D* PerlinNoisePodSeed(const PerlinNoisePod* const that);
 
 // Get the bound of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
@@ -121,13 +121,13 @@ Shapoid* PerlinNoisePodBound(const PerlinNoisePod* const that);
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecFloat* PerlinNoisePodScaleIn(const PerlinNoisePod* const that);
+const VecFloat* PerlinNoisePodScaleIn(const PerlinNoisePod* const that);
 
 // Get the scale of outputs of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
 inline 
 #endif 
-VecFloat* PerlinNoisePodScaleOut(const PerlinNoisePod* const that);
+const VecFloat* PerlinNoisePodScaleOut(const PerlinNoisePod* const that);
 
 // Get the shift of outputs of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
@@ -305,7 +305,7 @@ const GSet* FracNoisePods(const FracNoise* const that);
 #if BUILDMODE != 0 
 inline 
 #endif 
-PerlinNoisePod* FracNoiseGetNoise(const FracNoise* const that, 
+PerlinNoisePod* FracNoisePod(const FracNoise* const that, 
   const int iNoise);
 
 // Add a new noise with seed 'seed' to the FracNoise 'that'
