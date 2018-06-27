@@ -444,14 +444,18 @@ void UnitTestFracNoiseGet() {
   // Compare to reference (two versions because changes in compilation
   // options trigger small variations when casting from float to int)
 #if BUILDMODE == 0
+//GBSetFileName(gb, "./UnitTestFracNoiseGetRef0.tga");
+//GBRender(gb);
   GenBrush* gbRef = GBCreateFromFile("./UnitTestFracNoiseGetRef0.tga");
 #else
+//GBSetFileName(gb, "./UnitTestFracNoiseGetRef1.tga");
+//GBRender(gb);
   GenBrush* gbRef = GBCreateFromFile("./UnitTestFracNoiseGetRef1.tga");
 #endif
   if (gbRef == NULL) {
     FracNoiseErr->_type = PBErrTypeUnitTestFailed;
     sprintf(FracNoiseErr->_msg, 
-      "Couln't load UnitTestPerlinNoise3DRef.tga");
+      "Couln't load UnitTestFracNoiseGetRef.tga");
     PBErrCatch(FracNoiseErr);
   }
   if (GBIsSameAs(gb, gbRef) == false) {
@@ -460,7 +464,7 @@ void UnitTestFracNoiseGet() {
     PBErrCatch(FracNoiseErr);
   }
   // Free memory
-  ShapoidFree(&bound);
+  ShapoidFree(&bound);\
   GBFree(&gb);
   GBFree(&gbRef);
   FracNoiseFree(&noise);
