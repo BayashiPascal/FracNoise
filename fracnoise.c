@@ -110,7 +110,7 @@ float _PerlinNoiseGet(const PerlinNoise* const that,
   }
   if (VecGetDim(p) > 3) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
-    sprintf(FracNoiseErr->_msg, "'p' 's dimension is invalid (%d<4)",
+    sprintf(FracNoiseErr->_msg, "'p' 's dimension is invalid (%ld<4)",
       VecGetDim(p));
     PBErrCatch(FracNoiseErr);
   }
@@ -189,7 +189,7 @@ float _PerlinNoiseGet2D(const PerlinNoise* const that,
   }
   if (VecGetDim(p) != 2) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
-    sprintf(FracNoiseErr->_msg, "'p' 's dimension is invalid (%d==2)",
+    sprintf(FracNoiseErr->_msg, "'p' 's dimension is invalid (%ld==2)",
       VecGetDim(p));
     PBErrCatch(FracNoiseErr);
   }
@@ -264,7 +264,7 @@ float _PerlinNoiseGet3D(const PerlinNoise* const that,
   }
   if (VecGetDim(p) != 3) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
-    sprintf(FracNoiseErr->_msg, "'p' 's dimension is invalid (%d==3)",
+    sprintf(FracNoiseErr->_msg, "'p' 's dimension is invalid (%ld==3)",
       VecGetDim(p));
     PBErrCatch(FracNoiseErr);
   }
@@ -436,7 +436,7 @@ float PerlinNoisePodGetInsideness(PerlinNoisePod* const that,
     VecGetDim(pos) != ShapoidGetDim(that->_bound)) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
     sprintf(FracNoiseErr->_msg, 
-      "'pos' 's dimension is invalid (%d=%d)",
+      "'pos' 's dimension is invalid (%ld=%d)",
       VecGetDim(pos), ShapoidGetDim(that->_bound));
     PBErrCatch(FracNoiseErr);
   }
@@ -536,7 +536,7 @@ VecFloat* _FracNoiseGet(const FracNoise* const that,
   if (VecGetDim(pos) != VecGet(&(that->_dim), 0)) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
     sprintf(FracNoiseErr->_msg, 
-      "'pos' 's dimension is invalid (%d==%d)",
+      "'pos' 's dimension is invalid (%ld==%d)",
       VecGetDim(pos), VecGet(&(that->_dim), 0));
     PBErrCatch(FracNoiseErr);
   }
@@ -557,7 +557,7 @@ VecFloat* _FracNoiseGet(const FracNoise* const that,
       // declare a 3D version of it
       VecFloat3D* p = (VecFloat3D*)VecGetNewDim(pos, 3);
       // Scale the input
-      for (int i = MIN(3, VecGetDim(pos)); i--;)
+      for (long i = MIN(3, VecGetDim(pos)); i--;)
         VecSet(p, i, 
           VecGet(p, i) * VecGet(PerlinNoisePodScaleIn(pod), i));
       // Declare a variable to memorize the rotated version of the input
@@ -596,17 +596,17 @@ VecFloat* _FracNoiseGet(const FracNoise* const that,
         VecScale(p, 1.0 / fc);
       }
       // Apply the smoothness
-      for (int i = VecGetDim(resPod); i--;)
+      for (long i = VecGetDim(resPod); i--;)
         VecSet(resPod, i, 
           pow(VecGet(resPod, i), PerlinNoisePodGetSmooth(pod)));
       // Scale the output
-      for (int i = VecGetDim(resPod); i--;)
+      for (long i = VecGetDim(resPod); i--;)
         VecSet(resPod, i, 
           VecGet(resPod, i) * VecGet(PerlinNoisePodScaleOut(pod), i));
       // Shift the output
       VecOp(resPod, 1.0, PerlinNoisePodShiftOut(pod), 1.0);
       // Apply the insideness
-      for (int i = VecGetDim(resPod); i--;)
+      for (long i = VecGetDim(resPod); i--;)
         VecSet(resPod, i, VecGet(resPod, i) * inside);
       // Add the result for this pod
       VecOp(res, 1.0, resPod, 1.0);

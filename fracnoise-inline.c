@@ -219,7 +219,7 @@ void _PerlinNoisePodSetBound(PerlinNoisePod* const that,
   if (ShapoidGetDim(bound) != VecGetDim(that->_scaleIn)) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
     sprintf(FracNoiseErr->_msg, 
-      "'bound' 's dimension is invalid (%d=%d)",
+      "'bound' 's dimension is invalid (%d=%ld)",
       ShapoidGetDim(bound), VecGetDim(that->_scaleIn));
     PBErrCatch(FracNoiseErr);
   }
@@ -251,7 +251,7 @@ void _PerlinNoisePodSetScaleIn(PerlinNoisePod* const that,
   if (VecGetDim(scale) != VecGetDim(that->_scaleIn)) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
     sprintf(FracNoiseErr->_msg, 
-      "'scale' 's dimension is invalid (%d=%d)",
+      "'scale' 's dimension is invalid (%ld=%ld)",
       VecGetDim(scale), VecGetDim(that->_scaleIn));
     PBErrCatch(FracNoiseErr);
   }
@@ -282,7 +282,7 @@ void _PerlinNoisePodSetScaleOut(PerlinNoisePod* const that, const VecFloat* cons
   if (VecGetDim(scale) != VecGetDim(that->_scaleOut)) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
     sprintf(FracNoiseErr->_msg, 
-      "'scale' 's dimension is invalid (%d=%d)",
+      "'scale' 's dimension is invalid (%ld=%ld)",
       VecGetDim(scale), VecGetDim(that->_scaleOut));
     PBErrCatch(FracNoiseErr);
   }
@@ -314,7 +314,7 @@ void _PerlinNoisePodSetShiftOut(PerlinNoisePod* const that,
   if (VecGetDim(shift) != VecGetDim(that->_shiftOut)) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
     sprintf(FracNoiseErr->_msg, 
-      "'shift' 's dimension is invalid (%d=%d)",
+      "'shift' 's dimension is invalid (%ld=%ld)",
       VecGetDim(shift), VecGetDim(that->_shiftOut));
     PBErrCatch(FracNoiseErr);
   }

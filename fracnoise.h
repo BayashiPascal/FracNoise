@@ -10,6 +10,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
+#include "pberr.h"
 #include "pbmath.h"
 #include "gset.h"
 #include "shapoid.h"
