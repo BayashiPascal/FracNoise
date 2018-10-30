@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Definitions}{2}
+\contentsline {subsection}{\numberline {1.1}Perlin noise}{2}
+\contentsline {subsection}{\numberline {1.2}FracNoise}{2}
+\contentsline {section}{\numberline {2}Interface}{6}
+\contentsline {section}{\numberline {3}Code}{6}
+\contentsline {subsection}{\numberline {3.1}fracnoise.c}{6}
+\contentsline {subsection}{\numberline {3.2}fracnoise-inline.c}{6}
+\contentsline {section}{\numberline {4}Makefile}{6}
+\contentsline {section}{\numberline {5}Unit tests}{6}
+\contentsline {section}{\numberline {6}Unit tests output}{6}
+\contentsline {section}{\numberline {7}Examples}{8}
+\contentsline {subsection}{\numberline {7.1}Terrain}{8}
+\contentsline {subsection}{\numberline {7.2}Cloud}{9}
+\contentsline {subsection}{\numberline {7.3}Rock}{10}
