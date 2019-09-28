@@ -102,74 +102,74 @@ void PerlinNoisePodFree(PerlinNoisePod** that);
 
 // Get the Perlin noise of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 const PerlinNoise* PerlinNoisePodNoise(const PerlinNoisePod* const that);
 
 // Get the seed of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 const VecFloat3D* PerlinNoisePodSeed(const PerlinNoisePod* const that);
 
 // Get the bound of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 Shapoid* PerlinNoisePodBound(const PerlinNoisePod* const that);
 
 // Get the scale of inputs of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 const VecFloat* PerlinNoisePodScaleIn(const PerlinNoisePod* const that);
 
 // Get the scale of outputs of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 const VecFloat* PerlinNoisePodScaleOut(const PerlinNoisePod* const that);
 
 // Get the shift of outputs of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 VecFloat* PerlinNoisePodShiftOut(const PerlinNoisePod* const that);
 
 // Get the fractal level of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 int PerlinNoisePodGetFractLvl(const PerlinNoisePod* const that);
 
 // Get the fractal coefficient of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 float PerlinNoisePodGetFractCoeff(const PerlinNoisePod* const that);
 
 // Get the border coefficient of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 float PerlinNoisePodGetBorder(const PerlinNoisePod* const that);
 
 // Get the smoothness of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 float PerlinNoisePodGetSmooth(const PerlinNoisePod* const that);
 
 // Get the squareness of the PerlinNoisePod 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 float PerlinNoisePodGetSquare(const PerlinNoisePod* const that);
 
 // Set the seed of the PerlinNoisePod 'that' to a copy of 'seed'
 // If 'seed' is the vector null the seed is left unchanged 
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void PerlinNoisePodSetSeed(PerlinNoisePod* const that, 
   const VecFloat3D* const seed);
@@ -178,7 +178,7 @@ void PerlinNoisePodSetSeed(PerlinNoisePod* const that,
 // The Shapoid 'bound' must have same dimensions as the input dimension
 // of the PerlinNoisePod.
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void _PerlinNoisePodSetBound(PerlinNoisePod* const that, 
   Shapoid* const bound);
@@ -188,7 +188,7 @@ void _PerlinNoisePodSetBound(PerlinNoisePod* const that,
 // 'scale' must have same dimension as the input dimension
 // of the PerlinNoisePod.
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void _PerlinNoisePodSetScaleIn(PerlinNoisePod* const that, 
   const VecFloat* const scale);
@@ -198,7 +198,7 @@ void _PerlinNoisePodSetScaleIn(PerlinNoisePod* const that,
 // 'scale' must have same dimension as the output dimension
 // of the PerlinNoisePod.
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void _PerlinNoisePodSetScaleOut(PerlinNoisePod* const that, 
   const VecFloat* const scale);
@@ -208,7 +208,7 @@ void _PerlinNoisePodSetScaleOut(PerlinNoisePod* const that,
 // 'shift' must have same dimension as the output dimension
 // of the PerlinNoisePod.
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void _PerlinNoisePodSetShiftOut(PerlinNoisePod* const that, 
   const VecFloat* const shift);
@@ -216,7 +216,7 @@ void _PerlinNoisePodSetShiftOut(PerlinNoisePod* const that,
 // Set the fractal level of the PerlinNoisePod 'that' to 'lvl'
 // 'lvl' must be greater than or equal to 0
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void PerlinNoisePodSetFractLvl(PerlinNoisePod* const that, const int lvl);
 
@@ -224,14 +224,14 @@ void PerlinNoisePodSetFractLvl(PerlinNoisePod* const that, const int lvl);
 // 'coeff' must be greater than 0.0, if it's negative its absolute 
 // value is used
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void PerlinNoisePodSetFractCoeff(PerlinNoisePod* const that, 
   const float coeff);
 
 // Set the border coefficient of the PerlinNoisePod 'that' to 'border'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void PerlinNoisePodSetBorder(PerlinNoisePod* const that, 
   const float border);
@@ -241,7 +241,7 @@ void PerlinNoisePodSetBorder(PerlinNoisePod* const that,
 // Below 1.0 gives a bumpy aspect, above 1.0 gives a thorny aspect,
 // 1.0 is the smoothest
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void PerlinNoisePodSetSmooth(PerlinNoisePod* const that, 
   const float smooth);
@@ -251,7 +251,7 @@ void PerlinNoisePodSetSmooth(PerlinNoisePod* const that,
 // 0.0 is the standard Perlin noise, 1.0 is the Perlin noise without
 // the smoother function on input parameter
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void PerlinNoisePodSetSquare(PerlinNoisePod* const that, 
   const float square);
@@ -291,20 +291,20 @@ void FracNoiseFree(FracNoise** that);
 
 // Get the dimensions of the noise 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 const VecShort2D* FracNoiseDim(const FracNoise* const that);
 
 // Get the pods of the noise 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 const GSet* FracNoisePods(const FracNoise* const that);
 
 // Get the 'iNoise'-th noise of the FracNoise 'that'
 // Return null if 'iNoise' is invalid
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 PerlinNoisePod* FracNoisePod(const FracNoise* const that, 
   const int iNoise);
@@ -313,14 +313,14 @@ PerlinNoisePod* FracNoisePod(const FracNoise* const that,
 // If seed is null it is replaced by a default seed
 // Return the new noise
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 PerlinNoisePod* FracNoiseAddNoise(FracNoise* const that, 
   const VecFloat3D* const seed);
 
 // Remove the PerlinNoisePod 'pod' from the FracNoise 'that'
 #if BUILDMODE != 0 
-inline 
+static inline 
 #endif 
 void FracNoiseRemoveNoise(FracNoise* const that, 
   const PerlinNoisePod* const pod);
@@ -402,7 +402,7 @@ bool FracNoiseExportDF3(const FracNoise* const that,
   const VecFloat3D*: _FracNoiseGet, \
   default:PBErrInvalidPolymorphism) (Noise, (const VecFloat*)(U))
 
-// ================ Inliner ====================
+// ================ static inliner ====================
 
 #if BUILDMODE != 0
 #include "fracnoise-inline.c"
