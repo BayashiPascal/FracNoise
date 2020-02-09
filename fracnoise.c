@@ -692,7 +692,7 @@ bool FracNoiseExportDF3(const FracNoise* const that,
     sizeof(unsigned int) != 4) {
     FracNoiseErr->_type = PBErrTypeInvalidArg;
     sprintf(FracNoiseErr->_msg, 
-      "types' size mismatched (%d==1,%d==2,%d==4)",
+      "types' size mismatched (%lu==1,%lu==2,%lu==4)",
       sizeof(unsigned char),sizeof(unsigned short),
       sizeof(unsigned int));
     PBErrCatch(FracNoiseErr);
