@@ -30,9 +30,9 @@ const int PerlinNoisePermutation[256] = {
 
 // ================ Functions definition ====================
 
-inline float fade(float t, float s);
-inline float lerp(float t, float a, float b);
-inline float grad(int hash, float x, float y, float z);
+static inline float fade(float t, float s);
+static inline float lerp(float t, float a, float b);
+static inline float grad(int hash, float x, float y, float z);
 
 // ================ Functions implementation ====================
 
@@ -325,18 +325,18 @@ float _PerlinNoiseGet3D(const PerlinNoise* const that,
   return res;
 }
 
-inline float fade(float t, float s) { 
+static inline float fade(float t, float s) { 
   float ret = 
     (1.0 - s) * t * t * t * (t * (t * 6.0 - 15.0) + 10.0) + s * t; 
   return ret;
 }
 
-inline float lerp(float t, float a, float b) { 
+static inline float lerp(float t, float a, float b) { 
   float ret = a + t * (b - a); 
   return ret;
 }
 
-float grad(int hash, float x, float y, float z) {
+static float grad(int hash, float x, float y, float z) {
   int h = hash & 15;
   float u = h < 8 ? x : y;
   float v = h < 4 ? y : h == 12 || h == 14 ? x : z;

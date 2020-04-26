@@ -253,7 +253,7 @@ int main(int argc, char** argv) {
   VecSet(&radiusRock, 2, 1.0);
   //MakeRock(rockA, RANDOMSEED, fileName, &radiusRock);
   MakeRock(rockB, time(NULL), fileName, &radiusRock);
-  int ret = system("make rock");(void)ret;
+  //int ret = system("make rock");(void)ret;
   //MakeRock(rockA, time(NULL), argv[1], &radiusRock);
 
 
